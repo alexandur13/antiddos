@@ -1,0 +1,16 @@
+# /etc/systemd/system/l7d.service
+[Unit]
+Description=Single-file L7D (L7 Anti-DDoS) - detector+mitigator
+After=network-online.target nginx.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=root
+Environment="LOG_FILE=/var/log/nginx/access_l7.json"
+ExecStart=/opt/l7d/l7d.sh run
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=multi-user.target
